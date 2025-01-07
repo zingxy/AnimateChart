@@ -38,15 +38,15 @@ export const polarArea = (chart, data, options = {}) => {
   ctx.save();
   ctx.font = `${config.tickLabelFont}px Arial`;
   let labelWidth = ctx.measureText("M".repeat(max.toString().length)).width * 2;
-  let radius = Math.min(viewport.width, viewport.height) / 2;
+  let maxRadius = Math.min(viewport.width, viewport.height) / 2;
   ctx.restore();
 
   if (config.stroke) {
-    radius = radius - Math.max(config.strokeWidth / 2, labelWidth / 2);
+    maxRadius = maxRadius - Math.max(config.strokeWidth / 2, labelWidth / 2);
   } else {
-    radius = radius - Math.max(0, labelWidth / 2);
+    maxRadius = maxRadius - Math.max(0, labelWidth / 2);
   }
-  const scale = d3scale.scaleLinear([min, max], [0, radius]);
+  const scale = d3scale.scaleLinear([min, max], [0, maxRadius]);
 
   const segementAngle = (1 / data.length) * Math.PI * 2;
   const drawFrame = (animationFactor) => {
@@ -84,14 +84,14 @@ export const polarArea = (chart, data, options = {}) => {
       startAngle += computedSegementAngle;
     }
   };
-  const drawAxis = (animationFactor) => {
-    let maxTicks = Math.floor(radius / labelWidth);
-    if (scale.ticks().length - 1 > maxTicks) {
-      while (scale.ticks(maxTicks).length - 1 > maxTicks) {
-        maxTicks--;
+  const drawAxis = () => {
+    let maxIntervals = Math.floor(maxRadius / labelWidth);
+    if (scale.ticks().length - 1 > maxIntervals) {
+      while (scale.ticks(maxIntervals).length - 1 > maxIntervals) {
+        maxIntervals--;
       }
     }
-    scale.ticks(maxTicks).forEach((t) => {
+    scale.ticks(maxIntervals).forEach((t) => {
       const pos = scale(t);
       ctx.strokeStyle = "rgba(0,0,0,.1)";
       ctx.lineWidth = 1;
