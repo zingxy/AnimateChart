@@ -50,7 +50,7 @@ export const polarArea = (chart, data, options = {}) => {
 
   const segementAngle = (1 / data.length) * Math.PI * 2;
   const drawFrame = (animationFactor) => {
-    ctx.transform(1, 0, 0, -1, viewport.width * 0.5, viewport.height * 0.5);
+    ctx.transform(1, 0, 0, 1, viewport.width * 0.5, viewport.height * 0.5);
     drawPie(animationFactor);
     drawAxis(animationFactor);
   };
@@ -103,7 +103,6 @@ export const polarArea = (chart, data, options = {}) => {
       ctx.translate(pos, 0);
       ctx.textBaseline = "middle";
       ctx.textAlign = "center";
-      ctx.scale(1, -1);
       ctx.fillText(t, 0, 0);
       ctx.restore();
     });

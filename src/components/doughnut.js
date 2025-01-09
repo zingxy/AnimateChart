@@ -22,7 +22,7 @@ export const doughnut = (chart, data, options = {}) => {
 
   const sum = data.map((i) => i.value).reduce((acc, value) => acc + value, 0);
   const drawFrame = (animationFactor) => {
-    ctx.transform(1, 0, 0, -1, viewport.width * 0.5, viewport.height * 0.5);
+    ctx.transform(1, 0, 0, 1, viewport.width * 0.5, viewport.height * 0.5);
     let startAngle = Math.PI / 4;
     for (const { value, color } of data) {
       const segementAngle =
