@@ -136,7 +136,15 @@ draw(document.querySelector(".line"), (chart) =>
 
 draw(document.querySelector(".radar"), (chart) =>
   radar(chart, {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: [
+      "Eating",
+      "Drinking",
+      "Sleeping",
+      "Designing",
+      "Coding",
+      "Partying",
+      "Running",
+    ],
     datasets: [
       {
         fillColor: "rgba(220,220,220,0.5)",

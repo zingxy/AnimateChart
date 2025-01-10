@@ -44,6 +44,9 @@ export function drawCoordinateSystem(ctx) {
     ctx.stroke();
   }
   // 设置样式
+  ctx.save();
+  ctx.textAlign = "left";
+  ctx.textBaseline = "bottom";
   ctx.lineWidth = 2; // 设置线条宽度
   ctx.strokeStyle = "red"; // 坐标轴颜色
   ctx.fillStyle = "red"; // 文本颜色
@@ -70,4 +73,5 @@ export function drawCoordinateSystem(ctx) {
 
   // 添加轴标签
   ctx.fillText("Y", centerX - 10, centerY + axisLength + 20);
+  ctx.restore();
 }

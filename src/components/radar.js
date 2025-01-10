@@ -10,7 +10,7 @@ window.d3 = d3scale;
 export const radar = (chart, data, options = {}) => {
   const { ctx, viewport } = chart;
   const defaultConfig = {
-    padding: 30,
+    padding: 50,
   };
   const config = { ...defaultConfig, ...options };
   let min = Number.MAX_VALUE;
@@ -29,7 +29,7 @@ export const radar = (chart, data, options = {}) => {
   const segementAngle = (2 * Math.PI) / data.labels.length;
 
   const drawFrame = (animationFactor) => {
-    ctx.transform(1, 0, 0, -1, viewport.width / 2, viewport.height / 2);
+    ctx.transform(1, 0, 0, 1, viewport.width / 2, viewport.height / 2);
     ctx.save();
     drawLine();
     ctx.restore();
@@ -63,13 +63,36 @@ export const radar = (chart, data, options = {}) => {
         ctx.moveTo(0, r);
       }
       ctx.restore();
+      // ctx.save();
       if (i === scale.ticks().length - 1) {
+        ctx.textBaseline = "top";
+        ctx.textAlign = "center";
+        const stdVec = [0, 1];
         for (let j = 0; j < data.labels.length; j++) {
+          const curVec = [
+            r * Math.sin(j * segementAngle),
+            r * Math.cos(j * segementAngle),
+          ];
+          const crossProduct = stdVec[0] * curVec[1] - curVec[0] * stdVec[1];
+
+          ctx.save();
           const label = data.labels[j];
-          ctx.rotate(segementAngle);
-          ctx.fillText(label, 0, r + 5);
+          ctx.rotate(segementAngle * j);
+          ctx.translate(0, r + 10);
+          ctx.textAlign = "right";
+          if (crossProduct < 0) {
+            ctx.textAlign = "right";
+          } else if (crossProduct > 0) {
+            ctx.textAlign = "left";
+          } else {
+            ctx.textAlign = "center";
+          }
+          ctx.rotate(-segementAngle * j);
+          ctx.fillText(label, 0, 0);
+          ctx.restore();
         }
       }
+      // ctx.restore();
     });
   };
   const drawData = (animationFactor) => {
