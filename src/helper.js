@@ -15,15 +15,14 @@ export const drawHelp = (ctx) => {
 export const getOrderOfMagnitude = (x) =>
   x > 0 ? Math.floor(Math.log10(x)) : null;
 
-// 设定坐标系的中心
-const centerX = 0;
-const centerY = 0;
-
-// 坐标轴长度
-const axisLength = 200;
-
 // 绘制坐标系函数
 export function drawCoordinateSystem(ctx) {
+  // 设定坐标系的中心
+  const centerX = 0;
+  const centerY = 0;
+
+  // 坐标轴长度
+  const axisLength = 200;
   // 绘制箭头函数
   function drawArrow(x, y, axis) {
     const arrowSize = 10; // 箭头大小
